@@ -12,22 +12,24 @@ oracle.py — 仕様（アサーション）オラクル。
 
 使い方:
   python oracle.py                  # reference.py（正例）を採点
-  python oracle.py --candidate NAME # NAME.py を採点
+  python oracle.py --candidate NAME # eval/corpus/NAME.py を採点（NAME は英数字と _ のみ）
   python oracle.py --selftest       # オラクル自身を検証（正例→PASS / 既知バグ→FAIL）
-終了コード: PASS（または selftest 期待どおり）で 0、それ以外 1。
+終了コード: PASS（または selftest 期待どおり）で 0、それ以外 1（引数不正は 2）。
 """
 import argparse
 import importlib.util
+import re
 import sys
 from pathlib import Path
 
 # Windows コンソール(cp932)でも日本語・記号を出せるよう出力を UTF-8 に統一。
 # Linux/Mac は元から UTF-8 なので無害。これが無いと Windows で print が落ちる。
-if hasattr(sys.stdout, "reconfigure"):
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, "reconfigure"):
+        try:
+            _s.reconfigure(encoding="utf-8")
+        except Exception:
+            pass
 
 EVAL = Path(__file__).resolve().parent
 CORPUS = EVAL / "corpus"
@@ -122,6 +124,10 @@ def main():
     a = ap.parse_args()
     if a.selftest:
         sys.exit(0 if selftest() else 1)
+    # --candidate はファイル名のみ受け付ける（英数字とアンダースコア）。
+    # "../xxx" のようなパス断片で eval/corpus/ の外を読ませない。
+    if not re.fullmatch(r"[A-Za-z0-9_]+", a.candidate):
+        ap.error(f"--candidate はファイル名のみ（英数字とアンダースコア、拡張子なし）: {a.candidate!r}")
     v, d = grade(CORPUS / f"{a.candidate}.py")
     table([(f"{a.candidate}.py", v, d)], "採点（仕様アサーション）")
     sys.exit(0 if v == "PASS" else 1)

@@ -8,7 +8,7 @@ model: sonnet
 あなたは約数発見エージェントです。
 
 ## 任務
-整数 `n`（n ≥ 2）を受け取り、**1 と n 以外の約数を1つ**返す純粋関数 `find_divisor(n)` を `candidate.py` に実装する。約数が無い（＝素数）なら `None` を返す。
+整数 `n`（n ≥ 2）を受け取り、**1 と n 以外の約数を1つ**返す純粋関数 `find_divisor(n)` を `eval/corpus/candidate.py` に実装する（オラクルは `eval/corpus/` 配下だけを探す。リポジトリ直下に置かない）。約数が無い（＝素数）なら `None` を返す。
 
 出力は**一意でなくてよい**（例: 12 なら 2・3・4・6 のどれを返しても正解）。
 
@@ -24,7 +24,7 @@ model: sonnet
 - 標準ライブラリのみ。
 
 ## 進め方
-1. `candidate.py` に `find_divisor` を実装。
+1. `eval/corpus/candidate.py` に `find_divisor` を実装。
 2. `python eval/oracle.py --candidate candidate` を実行し PASS を確認してから完了。
 
 ## 完了条件

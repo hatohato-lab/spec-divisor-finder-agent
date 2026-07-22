@@ -1,6 +1,11 @@
 # spec-divisor-finder-agent
 
+*An AI agent that finds a nontrivial divisor of n, graded by a specification oracle that re-verifies each answer instead of comparing it to stored expected outputs.*
+*Part of a series of self-built agents demonstrating evaluation-driven development (EDD).*
+
 整数 n の**非自明な約数を1つ**返す `find_divisor(n)` を実装するエージェントと、**出力が一意でない処理を「仕様を満たすか」で判定する**オラクル（採点プログラム）。
+
+専門用語を使わない説明は [説明書.md](説明書.md) にあります。
 
 ## 概要
 
@@ -22,7 +27,7 @@ python eval/oracle.py --selftest # オラクル自身を検証（②でFAILが�
 
 ## エージェントの動かし方
 
-`.claude/agents/spec-divisor-finder-agent.md` の指示で `candidate.py` に `find_divisor(n)` を実装し、`python eval/oracle.py --candidate candidate` で採点。candidate が無くても `reference` で全工程を再現できます。
+`.claude/agents/spec-divisor-finder-agent.md` の指示で `eval/corpus/candidate.py` に `find_divisor(n)` を実装し、`python eval/oracle.py --candidate candidate` で採点（オラクルは `eval/corpus/` 配下の `candidate.py` を読みます）。candidate が無くても `reference` で全工程を再現できます。
 
 ## しくみ
 
