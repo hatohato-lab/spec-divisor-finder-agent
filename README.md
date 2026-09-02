@@ -49,7 +49,8 @@ n=2..5000 の各 n で、約数を返すなら 1<d<n かつ割り切れ、None �
 ## ファイル構成
 - `.claude/agents/…md` … エージェント定義／`eval/oracle.py` … 仕様オラクル（`--selftest` 内蔵）
 - `eval/corpus/reference.py` … 正例／`broken_*.py` … 既知バグ（陰性対照）
-- `design/design.md` … 設計の考え方
+- `design/design.md` … 設計の考え方／`説明書.md` … 専門用語を使わない説明
+- `.github/workflows/ci.yml` … CI（selftest を自動実行）
 
 ---
 自作 AI エージェント集（評価駆動開発の実証）の一つ。背景は [design/design.md](design/design.md)。
